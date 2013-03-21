@@ -1,0 +1,29 @@
+1.如果先前没有声明过的一个名字出现在某个表达式中，并且其后
+紧跟一个左圆括号，那么上下文就会认为该名字是一个函数名字，该
+函数的返回值将被假定为int类型，但上下文并不对其参数做任何假设。
+并且如果函数声明中不包括参数，例如
+double atof();
+那么编译程序也不会对函数atof的参数做任何假设，并会关闭所有的参数检查。
+
+2.可以使用堆栈来实现输入的回冲
+#define BUFSIZE 100
+char buf[BUFSIZE]; /* buffer for ungetch */
+int bufp = 0; /* next free position in buf */
+int getch(void) /* get a (possibly pushedback)
+character */
+{
+return (bufp > 0) ? buf[bufp]
+: getchar();
+}
+void ungetch(int c) /* push character back on input */
+{
+if (bufp >= BUFSIZE)
+printf("ungetch: too many characters\n");
+else
+buf[bufp++] = c;
+}
+3.外部变量的初始化必须出现在它的定义中。
+
+4.编写find 参看tcpl96页
+
+5.编写通用qsort，参见tcpl98页
