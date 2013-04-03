@@ -1,3 +1,4 @@
+//http://leetcode.com/onlinejudge#question_4
 //我把解题报告放在了http://zixiaojindao.github.com/Algorithms/2013/03/27/median-of-two-sorted-arrays/
 //算法的主要思想就是如果a[i]是median，那么j = median - i - 1,必须满足b[j]<a[i]<b[j+1]
 class Solution {
