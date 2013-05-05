@@ -68,9 +68,9 @@ public:
 			{
 				res[0] = m[numbers[i]] + 1;
 				res[1] = i + 1;
+				return res;
 			}
 		}
-		return res;
 	}
 };
 
