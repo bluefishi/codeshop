@@ -20,12 +20,15 @@ public:
     {
         if(size <= 0)
           return NULL;
-        TreeNode* root = new TreeNode(prorder[pIndex]);
+        TreeNode* root = new TreeNode(preorder[pIndex]);
         int mIndex = iIndex;
         for(int i = 0; i < size; ++i)
         {
             if(inorder[iIndex + i] == root->val)
+            {
               mIndex = iIndex + i;
+              break;
+            }
         }
         root->left = buildTree(preorder, pIndex + 1, inorder, iIndex, mIndex - iIndex);
         root->right = buildTree(preorder, pIndex + mIndex - iIndex + 1, inorder, mIndex + 1, size - mIndex + iIndex - 1);

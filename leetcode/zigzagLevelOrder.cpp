@@ -17,8 +17,8 @@ public:
         if(root == NULL)
           return ret;
         queue<TreeNode*> que;
-        que.push_back(root);
-        que.push_back(NULL);
+        que.push(root);
+        que.push(NULL);
         ret.push_back(vector<int>());
         bool left = true;
         while(!que.empty())
@@ -29,17 +29,20 @@ public:
             {
                 ret.back().push_back(cur->val);
                 if(cur->left != NULL)
-                  que.push_back(cur->left);
+                  que.push(cur->left);
                 if(cur->right != NULL)
-                  que.push_back(cur->right);
+                  que.push(cur->right);
             }
-            else if(que.size() > 0)
+            else 
             {
                 if(!left)
                   reverse(ret.back().begin(), ret.back().end());
                 left = !left;
-                ret.push_back(vector<int>());
-                que.push_back(NULL);
+                if(que.size() > 0)
+                {
+                    ret.push_back(vector<int>());
+                    que.push(NULL);
+                }
             }
         }
         
