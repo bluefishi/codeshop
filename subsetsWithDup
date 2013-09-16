@@ -1,0 +1,60 @@
+//http://leetcode.com/oldoj#question_90
+class Solution {
+	public:
+		vector<vector<int> > subsetsWithDup(vector<int>& S)
+		{
+			unordered_map<int, int> countMap;
+			vector<int> uniqueSet;
+			vector<vector<int> > ret;
+			for(int i = 0; i < S.size(); ++i)
+			{
+				if(countMap.find(S[i]) == countMap.end())
+				{
+					countMap[S[i]] = 1;
+					uniqueSet.push_back(S[i]);
+				}
+				else
+				{
+					countMap[S[i]] += 1;
+				}
+			}
+			sort(uniqueSet.begin(), uniqueSet.end());
+			vector<int> choice(uniqueSet.size(), 0);
+			BuildExternalSubset(uniqueSet, choice, countMap, 0, 0, ret);
+			return ret;
+		}
+
+		void BuildInternalSubset(vector<int>& choice, vector<int>& internalChoice, unordered_map<int, int> countMap, int index, int count, vector<vector<int> >& ret)
+		{
+			if(index == count)
+			{
+				ret.push_back(vector<int>());
+				for(int i = 0; i < count; ++i)
+				{
+					for(int j = 0; j < internalChoice[i]; ++j)
+					{
+						ret.back().push_back(choice[i]);
+					}
+				}
+				return;
+			}
+			for(int i = 1; i <= countMap[choice[index]]; ++i)
+			{
+				internalChoice[index] = i;
+				BuildInternalSubset(choice, internalChoice, countMap, index + 1, count, ret);
+			}
+		}
+		void BuildExternalSubset(vector<int>& uniqueSet, vector<int>& choice, unordered_map<int, int>& countMap, int index, int count, vector<vector<int> >& ret)
+		{
+			if(index == uniqueSet.size())
+			{
+				vector<int> internalChoice(count);
+				BuildInternalSubset(choice, internalChoice, countMap, 0, count, ret);
+				return;
+			}
+			BuildExternalSubset(uniqueSet, choice, countMap, index + 1, count, ret);
+			choice[count] = uniqueSet[index];
+			BuildExternalSubset(uniqueSet, choice, countMap, index + 1, count + 1, ret); 
+		}
+
+};
