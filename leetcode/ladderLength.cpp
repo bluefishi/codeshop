@@ -23,6 +23,7 @@ class Solution {
 			que.push(string2Index[start]);
 			visited[string2Index[start]] = true;
 			parent[string2Index[start]] = -1;
+			bool flag = false;
 			while(!que.empty())
 			{
 				int root = que.front();
@@ -42,11 +43,18 @@ class Solution {
 								parent[childIndex] = root;
 								visited[childIndex] = true;
 								if(childIndex == string2Index[end])
-								  break;
+								{
+									flag = true;
+									break;
+								}
 							}
 						}
 					}
+					if(flag)
+					    break;
 				}
+				if(flag)
+			  	   break;
 			}
 			int cur  = string2Index[end];
 			if(parent[cur] == -1)
