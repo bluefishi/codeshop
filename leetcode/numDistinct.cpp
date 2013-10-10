@@ -1,4 +1,6 @@
 //sigh，又是动态规划，跟editdistance很像
+//dp[i][j] = dp[i-1][j]
+//           dp[i-1][j] + dp[i-1][j-1] if S[i-1]==T[j-1]
 //http://leetcode.com/onlinejudge#question_115
 class Solution {
 public:
