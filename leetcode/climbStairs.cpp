@@ -11,10 +11,9 @@ public:
         for(int i = 2; i <= n; ++i)
         {
             f_n = f_n_1 + f_n_2;
-            f_n_1 =  f_n;
-            f_n_2 = f_n_1;
+            f_n_2 =  f_n_1;
+            f_n_1 = f_n;
         }
-        cout<<f_n<<endl;
         return f_n;
     }
 };

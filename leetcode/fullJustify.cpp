@@ -1,3 +1,4 @@
+//http://oj.leetcode.com/problems/text-justification/
 class Solution {
 public:
     vector<string> fullJustify(vector<string> &words, int L) {
@@ -8,32 +9,59 @@ public:
         while(end < words.size())
         {
             int lineLen = 0;
-            while(end < words.size() && lineLen + words[end].length() < L)
+            int emptyWordNum = 0;
+            while(end < words.size() && lineLen + words[end].length() <= L)
             {
-                lineLen += words[end].length() + 1;
+				if(words[end].length() != 0)
+                    lineLen += words[end].length() + 1;
+				else
+					emptyWordNum += 1;
                 ++end;
             }
             int wordNumber = end - start;
-            if(wordNumber == 1)
+            int realWordNumber = wordNumber - emptyWordNum;
+			if(realWordNumber == 1 || realWordNumber == 0 || end == words.size())
             {
-                ret.push_back(words[start] + string(L - words[start].length(), ' '));
+                int spaceRight = L;
+                ret.push_back("");
+                while(start < end - 1)
+                {
+					if(words[start].length() != 0)
+					{
+						ret.back() += words[start];
+						ret.back() += " ";
+						spaceRight -= (words[start].length() + 1);
+					}
+					++start;
+                }
+                ret.back() += words[start];
+				spaceRight -= words[start].length();
+                ret.back() += string(spaceRight, ' ');
             }
             else
             {
                 ret.push_back("");
-                int totalSpaceNumber = L - lineLen + wordNumber;
-                int moreSpaceUpper = totalSpaceNumber % (wordNumber - 1);
+                int totalSpaceNumber = L - lineLen + realWordNumber;
+				int moreSpaceUpper = totalSpaceNumber % (realWordNumber - 1);
                 int i = 0;
-                for(;i < moreSpaceUpper; ++i)
+                while(i < moreSpaceUpper)
                 {
-                    ret.back() += words[start];
-                    ret.back() += string(totalSpaceNumber / (wordNumber - 1) + 1, ' ');
+					if(words[start].length() != 0)
+					{
+						ret.back() += words[start];
+						ret.back() += string(totalSpaceNumber / (realWordNumber - 1) + 1, ' ');
+                        ++i;
+					}
                     ++start;
                 }
-                for(; i < wordNumber - 1; ++i)
+				while(i < realWordNumber - 1)
                 {
-                    ret.back() += words[start];
-                    ret.back() += string(totalSpaceNumber / (wordNumber - 1), ' ');
+					if(words[start].length() != 0)
+					{
+						ret.back() += words[start];
+						ret.back() += string(totalSpaceNumber / (realWordNumber - 1), ' ');
+                        ++i;
+					}
                     ++start;
                 }
                 ret.back() += words[start];
